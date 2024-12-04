@@ -1,13 +1,12 @@
-
 export const metadata = {
-  title: "HomePage",
-  description: "Página da home, onde mostra os desafios",
+  title: "Perfil",
+  description: "Página do perfil do usuario logado",
 };
 
 export default function Home() {
   return (
     <div>
-      <h1>HOME</h1>
+      <h1>Perfil</h1>
     </div>
   );
 }
