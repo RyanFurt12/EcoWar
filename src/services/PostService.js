@@ -7,6 +7,10 @@ class PostService extends BaseService {
       data: { userId, challengeId, title, description, photo },
     });
   }
+
+  async deletePost(id){
+    return this.prisma.post.delete({ where: { id } })
+  }
 }
 
 export default new PostService();

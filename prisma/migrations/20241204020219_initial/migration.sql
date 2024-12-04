@@ -14,7 +14,7 @@ CREATE TABLE "Challenge" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "startDate" TIMESTAMP(3) NOT NULL,
+    "startDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "endDate" TIMESTAMP(3) NOT NULL,
     "creatorId" INTEGER NOT NULL,
     "coverPhoto" TEXT,
@@ -29,6 +29,7 @@ CREATE TABLE "Post" (
     "challengeId" INTEGER NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "photo" TEXT,
 
     CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
@@ -40,6 +41,7 @@ CREATE TABLE "Interaction" (
     "postId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "content" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isReaction" BOOLEAN NOT NULL,
 
     CONSTRAINT "Interaction_pkey" PRIMARY KEY ("id")
