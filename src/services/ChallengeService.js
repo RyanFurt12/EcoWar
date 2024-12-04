@@ -39,7 +39,7 @@ class ChallengeService extends BaseService {
     return await this.prisma.post.findMany({
       where: { challengeId },
       orderBy: { id: 'desc' },
-      include: { user: true },
+      include: { user: true, interactions: true },
     });
   }
 

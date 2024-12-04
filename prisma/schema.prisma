@@ -13,10 +13,10 @@ model User {
   email       String      @unique
   name        String
   password    String
-  profilePicture String?  // Foto de perfil (opcional)
-  posts       Post[]      // Relacionamento 1:N com Postagem
-  interactions Interaction[] // Relacionamento 1:N com Interação
-  challenges  Challenge[] @relation("UserChallenges") // Relacionamento N:M com Desafio
+  profilePicture String?
+  posts       Post[]      
+  interactions Interaction[] 
+  challenges  Challenge[] @relation("UserChallenges") 
   created_challenges Challenge[]
 }
 
@@ -24,12 +24,12 @@ model Challenge {
   id          Int         @id @default(autoincrement())
   name        String
   description String
-  startDate   DateTime
+  startDate   DateTime   @default(now())
   endDate     DateTime
-  creatorId    Int       // ID do criador do desafio
+  creatorId    Int       
   creator      User      @relation(fields: [creatorId], references: [id])
-  coverPhoto  String?     // Foto de capa (opcional)
-  participants User[]     @relation("UserChallenges") // Relacionamento N:M com Usuário
+  coverPhoto  String?     
+  participants User[]     @relation("UserChallenges") 
   Post Post[]
 }
 
@@ -39,10 +39,11 @@ model Post {
   challengeId Int
   title       String
   description String
-  photo       String?  // Foto da postagem (opcional)
+  createdAt   DateTime @default(now())
+  photo       String?  
   user        User     @relation(fields: [userId], references: [id])
   challenge   Challenge @relation(fields: [challengeId], references: [id])
-  interactions Interaction[] // Relacionamento 1:N com Interação
+  interactions Interaction[] 
 }
 
 model Interaction {
@@ -50,6 +51,7 @@ model Interaction {
   postId    Int
   userId    Int
   content   String
+  createdAt DateTime @default(now())
   isReaction Boolean
   post      Post     @relation(fields: [postId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
