@@ -1,3 +1,4 @@
+import PlusSvg from '@/components/svg/PlusSvg';
 import './home.css'
 import Challenges from '@/components/home/Challenges';
 
@@ -22,6 +23,8 @@ export default function Home() {
       <div className="challenges">
         <Challenges/>
       </div>
+
+      <a className='create-challenge' href="/desafio/criar"> <PlusSvg/> </a>
     </div>
   );
 }

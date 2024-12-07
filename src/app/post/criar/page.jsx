@@ -7,13 +7,13 @@ export const metadata = {
   description: "Página para a visualizar um dos desafios",
 };
 
-export default async function DesafioCriar() {
+export default async function PostCriar() {
   
   return (
     <div className='create-challenge-container'>
       <div className="header">
         <a href="/"><ReturnSvg/></a>
-        <h1>Criar Desafio</h1>
+        <h1>Criar Postagem</h1>
       </div>
       <div className="creation-container">
         <div className="create-img">
@@ -24,7 +24,7 @@ export default async function DesafioCriar() {
         </div>
 
         <label>
-          Nome do Desafio 
+          Titulo
           <input
             type='text'
             name='name'
@@ -32,22 +32,14 @@ export default async function DesafioCriar() {
         </label>
 
         <label>
-          Descrição do Desafio 
+          Descrição 
           <input
             type='text'
             name='description'
           />        
         </label>
 
-        <label>
-          Data final
-          <input
-            type='date'
-            name='finalDate'
-          />        
-        </label>
-
-        <button>Criar Desafio</button>
+        <button>Criar Postagem</button>
       </div>
     </div>
   );
