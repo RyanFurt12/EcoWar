@@ -1,0 +1,48 @@
+.challenge-container h2{
+  color: var(--color-01);
+}
+
+.current-challenges{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 180px;
+}
+
+.challenges-scroll{
+  position: absolute;
+  bottom: 0;
+  top: 30px;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.old-challenges{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.challenges-carroussel {
+  height: 150px; 
+  overflow-x: auto; 
+  overflow-y: hidden; 
+  scroll-behavior: smooth;  
+  padding: 10px 0;  
+  white-space: nowrap;
+}
+
+.challenges-carroussel>* {
+  display: inline-block;
+}
+
+.item{
+  height: 100px;
+  width: 100px;
+  margin: 5px;
+  background-color: brown;
+}
