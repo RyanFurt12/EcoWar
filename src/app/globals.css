@@ -70,3 +70,7 @@ label input{
 label input:focus{
   outline: none;
 }
+
+img{
+  aspect-ratio: 1;
+}
