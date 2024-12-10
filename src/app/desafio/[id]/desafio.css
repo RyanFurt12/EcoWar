@@ -13,11 +13,8 @@
   top: 10px;
   left: 10px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 15px;
-  text-overflow: ellipsis;
-  width: fit-content;
-  white-space: nowrap;
 }
 
 .header svg{
