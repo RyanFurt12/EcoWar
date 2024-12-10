@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import ReturnSvg from '@/components/svg/ReturnSvg';
 import './loginPage.css';
@@ -14,7 +14,7 @@ export default function LoginPage() {
   }, []);
 
   const [loginData, setLoginData] = useState({
-    username: '',
+    email: '',
     password: ''
   });
 
@@ -41,6 +41,74 @@ export default function LoginPage() {
     }));
   };
 
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: loginData.email, password: loginData.password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong");
+      }
+
+      localStorage.setItem("token", JSON.stringify(data.token));
+      sessionStorage.setItem("user", JSON.stringify(data.user))
+
+      alert("Login bem-sucedido!");
+      window.location.href = '/';
+    } catch (error) {
+      alert(error.message || "Erro ao fazer login");
+    }
+  };
+
+  const handleSignupSubmit = async (e) => {
+    e.preventDefault(); 
+    
+    if (signupData.password !== signupData.confirmPassword) {
+      alert("As senhas não coincidem!");
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: signupData.name,
+          email: signupData.email,
+          password: signupData.password,
+        })
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        alert('Usuário criado com sucesso!');
+        setVisibleSection(null);
+        setSignupData({
+          name: '',
+          email: '',
+          password: '',
+          confirmPassword: ''
+        })
+      } else {
+        const error = await response.json();
+        alert(`Erro ao criar usuário: ${error.error}`);
+      }
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      alert("Erro ao enviar os dados.");
+    }
+  };
+
   return (
     <>
       <div className='initial-container'>
@@ -52,15 +120,16 @@ export default function LoginPage() {
           Criar login
         </button>
 
-        <div className={`front-container ${visibleSection === 'login'? 'animate-in': ''}`}>
+        {/* Tela de login */}
+        <form onSubmit={handleLoginSubmit} className={`front-container ${visibleSection === 'login'? 'animate-in': ''}`}>
           <a className='return' onClick={() => setVisibleSection(null)}><ReturnSvg/></a>
           <h2>Login</h2>
           <label>
             Usuário
             <input
-              type='text'
-              name='username'
-              value={loginData.username}
+              type='email'
+              name='email'
+              value={loginData.email}
               onChange={handleLoginChange}
             />        
           </label>
@@ -73,11 +142,11 @@ export default function LoginPage() {
               onChange={handleLoginChange}
             />
           </label>
-          <button className='submit-button'>Continue</button>
-        </div>
+          <button className='submit-button' type='submit'>Continue</button>
+        </form>
 
-
-        <div className={`front-container ${visibleSection === 'signup'? 'animate-in':''}`}>
+        {/* Tela de cadastro */}
+        <form onSubmit={handleSignupSubmit} className={`front-container ${visibleSection === 'signup'? 'animate-in':''}`}>
           <a className='return' onClick={() => setVisibleSection(null)}><ReturnSvg/></a>
           <h2>Criar Conta</h2>
           <label>
@@ -87,6 +156,7 @@ export default function LoginPage() {
               name='name'
               value={signupData.name}
               onChange={handleSignupChange}
+              required
             />
           </label>
           <label>
@@ -96,6 +166,7 @@ export default function LoginPage() {
               name='email'
               value={signupData.email}
               onChange={handleSignupChange}
+              required
             />
           </label>
           <label>
@@ -105,6 +176,7 @@ export default function LoginPage() {
               name='password'
               value={signupData.password}
               onChange={handleSignupChange}
+              required
             />
           </label>
           <label>
@@ -114,11 +186,11 @@ export default function LoginPage() {
               name='confirmPassword'
               value={signupData.confirmPassword}
               onChange={handleSignupChange}
+              required
             />
           </label>
-          <button className='submit-button'>Continue</button>
-        </div>
-
+          <button className='submit-button' type='submit'>Criar Conta</button>
+        </form>
       </div>      
     </>
   );

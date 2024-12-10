@@ -8,7 +8,7 @@ class UserService extends BaseService {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     return await this.prisma.user.create({
-      data: { email, name, password: hashedPassword },
+      data: { email, name, password: hashedPassword, profilePicture: 'https://avatar.iran.liara.run/public/' },
     });
   }
 
@@ -47,6 +47,13 @@ class UserService extends BaseService {
 
   async deleteUser(id) {
     return await this.prisma.user.delete({ where: { id } });
+  }
+
+  async getChallenges(id){
+    return await this.prisma.user.findUnique({ 
+      where: { id },
+      include: { challenges: true }
+    });
   }
 }
 

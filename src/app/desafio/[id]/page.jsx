@@ -8,13 +8,28 @@ export const metadata = {
 };
 
 export default async function DesafioPage({ params }) {
-  const { id } = await params;
+  const { id } = params; 
+  const res = await fetch(`http://localhost:3000/api/challenge/${id}`);
+  const challengeData = await res.json();
+
+  if (!challengeData) {
+    return (<>
+      <div className='challenge-container'>
+        <div className="header">
+          <a href="/"><ReturnSvg/></a>
+          <h1>Desafio não encontrado</h1>
+        </div>
+      </div>
+    </>);
+  }
+
+  const { name, posts } = challengeData;
 
   return (
     <div className='challenge-container'>
       <div className="header">
         <a href="/"><ReturnSvg/></a>
-        <h1>Challenge Name</h1>
+        <h1>{name}</h1>
       </div>
       <div className='challenge-header'>
         <a href="/perfil">
@@ -29,19 +44,13 @@ export default async function DesafioPage({ params }) {
 
       <div className="posts-container">
         <h3>-- 09/12/2024 --</h3>
-
-        {PostCard()}
-        {PostCard()}
-        {PostCard()}
-        {PostCard()}
-        {PostCard()}
-        {PostCard()}
-        {PostCard()}
-        {PostCard()}
-        {PostCard()}
-        {PostCard()}
-        {PostCard()}
-
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <PostCard key={post.id} post={post} challengeId={id} />
+          ))
+        ) : (
+          <p>Nenhum post encontrado.</p>
+        )}
       </div>
 
       <a className='create-post' href="/desafio/[id]/post/criar"> <PlusSvg/> </a>
@@ -49,17 +58,17 @@ export default async function DesafioPage({ params }) {
   );
 }
 
-function PostCard(){
-  return(
-    <a href='/desafio/[id]/post/[postId]' className="postCard">
-      <img src="https://picsum.photos/80/400" alt="" />
+function PostCard({ post, challengeId }){
+  return (
+    <a href={`/desafio/${challengeId}/post/${post.id}`} className="postCard">
+      <img src={post.imageUrl || 'https://picsum.photos/80/400'} alt={post.title} />
       <div className="postInfo">
-        <h4>Titulo do card</h4>
+        <h4>{post.title}</h4>
         <div className="postUser">
-          <img src="https://picsum.photos/80/300" alt="" />
-          <p>Nome aaaaa</p>
+          <img src="https://picsum.photos/80/300" alt="User" />
+          <p>{post.user?.name || 'Nome do usuário'}</p>
         </div>
       </div>
     </a>
-  )
+  );
 }
