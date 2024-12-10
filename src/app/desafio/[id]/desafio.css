@@ -17,13 +17,20 @@
   gap: 15px;
 }
 
+.header h1{
+  width: 82vw;
+  font-size: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .header svg{
   fill: var(--color-03);
   height: 35px;
 }
 
 .challenge-header{
-  background-color: black;
+  background-color: rgb(120, 120, 120);
   position: absolute;
   width: 95%;
   height: 200px;

@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PostCard from "./PostCard";
 import ReturnSvg from '@/components/svg/ReturnSvg';
 import PlusSvg from '@/components/svg/PlusSvg';
 import ProfileButton from '@/components/general/ProfileButton';
+import getUser from "@/services/lib/getUser";
 
 export default function PostsContainer({ id }){
     const [challengeInfo, setChallengeInfo] = useState(null);
@@ -36,10 +37,10 @@ export default function PostsContainer({ id }){
               const postDate = new Date(post.createdAt).toDateString();
               const showDate = index === 0 || postDate !== new Date(challengeInfo.posts[index - 1].createdAt).toDateString();
               return (
-              <>
+              <React.Fragment key={post.id}>
                 { showDate && <h3>{postDate}</h3> }
                 <PostCard key={index} post={post} challengeId={id}/>
-              </>
+              </React.Fragment>
             )})
             ) : (
               <p>Você não tem posts visiveis no momento.</p>
@@ -54,7 +55,8 @@ export default function PostsContainer({ id }){
 
 async function fetchChallenge(challengeId) {
   try {
-    const response = await fetch('/api/challenge/' + challengeId, {
+    let user = await getUser();
+    const response = await fetch('/api/challenge/' + challengeId + '?userId=' + user.id, {
       method: 'GET', 
       headers: {
         'Content-Type': 'application/json', 
@@ -70,8 +72,7 @@ async function fetchChallenge(challengeId) {
     if (data.error) {
       throw new Error(data.error);
     }
-
-    console.log('Desafio:', data);
+    console.log(data)
     return data;
 
   } catch (error) {

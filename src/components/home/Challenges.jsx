@@ -87,7 +87,6 @@ async function fetchChallenges() {
       throw new Error(data.error);
     }
 
-    console.log('Desafios do usuário:', JSON.stringify(data));
     return data;
 
   } catch (error) {

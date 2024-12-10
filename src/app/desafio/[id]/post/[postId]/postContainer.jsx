@@ -17,7 +17,7 @@ export default function PostContainer({ id, postId }){
           <h1>{post?.challenge?.name || "Carregando..."}</h1>
         </div>
         <div className="post-content">
-          <img src={post?.photo || ""} alt="" />
+          <img src={post?.photo || "https://picsum.photos/300/200"} alt="" />
           <div className="post-user">
             <img src={ post? post?.user?.profilePicture : "https://picsum.photos/80"} alt="" />
             <div className="user-data">
@@ -50,7 +50,6 @@ async function fetchPost(id) {
       if (data.error) {
         throw new Error(data.error);
       }
-      console.log(data)
       return data;
   
     } catch (error) {

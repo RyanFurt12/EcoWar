@@ -9,29 +9,31 @@ class ChallengeService extends BaseService {
         name,
         description,
         startDate: new Date(),
-        endDate: endDate,
-        participants: { connect: { id: userId } },
+        endDate: new Date(endDate),
+        participants: { connect: { id: userId*1 } },
+        creator: { connect: { id: userId*1 } },
       },
     });
   }
 
   async joinChallenge(challengeId, userId) {
     const challenge = await this.prisma.challenge.findUnique({
-      where: { id:challengeId },
+      where: { id:challengeId*1 },
     });
     if (!challenge) throw new Error('Invalid invite code');
 
     return await this.prisma.challenge.update({
-      where: { id: challenge.id },
+      where: { id: challenge.id*1 },
       data: {
-        participants: { connect: { id: userId } },
+        participants: { connect: { id: userId*1 } },
       },
     });
   }
 
   async getChallenge(id) {
     return await this.prisma.challenge.findUnique({
-      where: { id }
+      where: { id },
+      include:{ participants: true }
     });
   }
   
