@@ -33,11 +33,11 @@ export default function PostsContainer({ id }){
         <div className="posts-container">
           {challengeInfo?.posts ? (
             challengeInfo.posts.map((post, index) => {
-              const postDate = new Date(post.createdAt).toLocaleDateString();
-              const showDate = index === 0 || postDate !== new Date(challengeInfo.posts[index - 1].createdAt).toLocaleDateString();
+              const postDate = new Date(post.createdAt).toDateString();
+              const showDate = index === 0 || postDate !== new Date(challengeInfo.posts[index - 1].createdAt).toDateString();
               return (
               <>
-                { showDate && <h3>2024-12-10</h3> }
+                { showDate && <h3>{postDate}</h3> }
                 <PostCard key={index} post={post} challengeId={id}/>
               </>
             )})
@@ -47,7 +47,7 @@ export default function PostsContainer({ id }){
               
         </div>
   
-        <a className='create-post' href="/desafio/[id]/post/criar"> <PlusSvg/> </a>
+        <a className='create-post' href={"/desafio/"+ id +"/post/criar"}> <PlusSvg/> </a>
       </div>
     );
 };

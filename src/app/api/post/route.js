@@ -1,5 +1,16 @@
 import PostService from "@/services/PostService";
 
+export async function GET(req) {
+  try {
+    const id = new URL(req.url).searchParams.get('id');
+    const post = await PostService.getPost(id*1);
+
+    return new Response(JSON.stringify(post), { status: 201 });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: error.message }), { status: 400 });
+  }
+}
+
 export async function POST(req) {
   try {
     const body = await req.json();

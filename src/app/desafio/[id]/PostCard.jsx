@@ -1,7 +1,7 @@
 export default function PostCard({ post, challengeId }){
     return (
       <a href={`/desafio/${challengeId}/post/${post.id}`} className={"postCard"}>
-        <img src={post.imageUrl || 'https://picsum.photos/80/400'} alt={post.title} />
+        <img src={post?.photo || 'https://picsum.photos/80/400'} alt={post.title} />
         <div className="postInfo">
           <h4>{post.title}</h4>
           <div className="postUser">

@@ -5,7 +5,7 @@ export default function ChallengeCard({ challenge }) {
     <>
         <a href={`/desafio/${challenge.id}`} className="card-container">
             <h3>{challenge.name}</h3>
-            <p>até {challenge.finalDate}</p>
+            <p>até {new Date(challenge.endDate).toDateString()}</p>
         </a>
     </>
   );
