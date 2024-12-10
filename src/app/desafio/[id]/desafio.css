@@ -15,6 +15,9 @@
   display: flex;
   align-items: center;
   gap: 15px;
+  text-overflow: ellipsis;
+  width: fit-content;
+  white-space: nowrap;
 }
 
 .header svg{
@@ -37,13 +40,7 @@
   position: absolute;
   top: 15px;
   right: 15px;
-  height: 70px;
-  width: 70px;
   transform: translateY(-50%);
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid var(--color-03);
-  background-color: var(--color-02);
 }
 
 .challenge-header .ranking{
@@ -127,6 +124,7 @@
 
 .postCard img{
   width: 25px;
+  aspect-ratio: 1;
   object-fit: cover;
   border-radius: 50%;
   border: 1px solid var(--color-03);

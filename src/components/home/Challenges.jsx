@@ -3,16 +3,16 @@
 import { useEffect, useState } from 'react';
 import ChallengeCard from '../Challenge/ChallengeCard';
 import './Challenges.css'
+import getUser from '@/services/lib/getUser';
 
 
 
 export default function Challenges() {
   const [currentChallenges, setCurrentChallenges] = useState([]);
   const [completedChallenges, setCompletedChallenges] = useState([]);
-  const userId = '1'; 
 
   useEffect(() => {
-    fetchChallenges(userId).then(data => {
+    fetchChallenges().then(data => {
       const currentDate = new Date(), current = [], completed = [];
 
       data.challenges.forEach(challenge => {
@@ -28,7 +28,7 @@ export default function Challenges() {
       setCurrentChallenges(current);
       setCompletedChallenges(completed);
     });
-  }, [userId]); 
+  }, []); 
 
 
   return (
@@ -65,8 +65,11 @@ export default function Challenges() {
 
 
 
-async function fetchChallenges(userId) {
+async function fetchChallenges() {
   try {
+    const user = await getUser();
+    const userId = user.id;
+
     const response = await fetch('/api/challenge?userId=' + userId, {
       method: 'GET', 
       headers: {

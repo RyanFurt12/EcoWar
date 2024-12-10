@@ -12,7 +12,7 @@ export default async function Home({ params }) {
   return (
     <div className='post-container'>
       <div className="header">
-        <a href="/"><ReturnSvg/></a>
+        <a href={"/desafio/"+id}><ReturnSvg/></a>
         <h1>Challenge Name</h1>
       </div>
       <div className="post-content">

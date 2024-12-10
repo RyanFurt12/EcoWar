@@ -58,6 +58,8 @@ export default function LoginPage() {
         throw new Error(data.error || "Something went wrong");
       }
 
+      data.user.password = undefined;
+
       localStorage.setItem("token", JSON.stringify(data.token));
       sessionStorage.setItem("user", JSON.stringify(data.user))
 

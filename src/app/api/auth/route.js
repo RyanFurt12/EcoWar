@@ -1,18 +1,21 @@
 import UserService from "@/services/UserService";
 import jwt from "jsonwebtoken";
 
-export async function GET() {
-  const token = req.headers.authorization?.split(" ")[1];
-
-  if (!token) {
-    return res.status(401).json({ error: "Token não fornecido" });
-  }
-
+export async function POST(req) {
+  
   try {
+    const body = await req.json();
+    const { token } = body;
+
+    if (!token) {
+      return new Response(JSON.stringify({ error: "Token não fornecido", req }), { status: 401 });
+    }
+  
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = UserService.findUser({id:decoded.id})
-    res.status(200).json({ message: "Usuário autenticado", user: user });
+    const user = await UserService.findUser({id:decoded.id})
+    user.password = undefined;
+    return new Response(JSON.stringify({ message: "Usuário autenticado", user: user }), { status: 200 });
   } catch (error) {
-    res.status(401).json({ error: "Token inválido ou expirado" });
+    return new Response(JSON.stringify({ error: "Token inválido ou expirado", token }), { status: 401 });
   }
 }

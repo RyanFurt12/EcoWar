@@ -1,6 +1,7 @@
 import PlusSvg from '@/components/svg/PlusSvg';
 import './home.css'
 import Challenges from '@/components/home/Challenges';
+import ProfileButton from '@/components/general/ProfileButton';
 
 export const metadata = {
   title: "HomePage",
@@ -15,9 +16,7 @@ export default function Home() {
           <img src="/logo.png" alt="Logo" />
         </div>
         <h1>EcoWar</h1>
-        <a href="/perfil">
-          <img src="https://picsum.photos/80" alt="" />
-        </a>
+        <ProfileButton/>
       </header>
 
       <div className="challenges">
